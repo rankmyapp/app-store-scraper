@@ -48,3 +48,8 @@ export interface ITunesLookupApp {
   bundleId: string;
   userRatingCount: number;
 }
+
+export interface ITunesLookupResponse {
+  resultCount: number,
+  results: ITunesLookupApp[]
+}

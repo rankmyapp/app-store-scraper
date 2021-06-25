@@ -1,6 +1,10 @@
 import axios from "axios";
 import { markets } from "../constants";
-import { ITunesLookupApp } from "../interfaces/itunes.lookup.interface";
+import {
+  Country,
+  ITunesLookupApp,
+  ITunesLookupResponse,
+} from "../interfaces/itunes.lookup.interface";
 import { ITunesApp } from "../interfaces/app.interface";
 
 const LOOKUP_URL = "https://itunes.apple.com/lookup";
@@ -49,13 +53,16 @@ export async function lookup(
   country = "us",
   lang?: string,
   requestOptions = {}
-) {
+): Promise<ITunesApp[]> {
   const langParam = lang ? `&lang=${lang}` : "";
   const joinedIds = ids.join(",");
   const url = `${LOOKUP_URL}?${idField}=${joinedIds}&country=${country}&entity=software${langParam}`;
-  const { data } = await axios.get(url, { ...requestOptions });
 
-  const filtered = data.results.filter(function (app: { wrapperType: string }) {
+  const { data }: { data: ITunesLookupResponse } = await axios.get(url, {
+    ...requestOptions,
+  });
+
+  const filtered = data.results.filter(function (app) {
     return (
       typeof app.wrapperType === "undefined" || app.wrapperType === "software"
     );
@@ -66,7 +73,7 @@ export async function lookup(
 
 export function storeId(countryCode: string) {
   const defaultStore = "143441";
-  const key = countryCode.toUpperCase() as keyof typeof markets;
+  const key = countryCode.toUpperCase() as Country;
 
   return (countryCode && markets[key]) || defaultStore;
 }
