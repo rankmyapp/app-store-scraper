@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('request');
+const axios = require('axios');
 const debug = require('debug')('app-store-scraper');
 const c = require('./constants');
 
@@ -43,23 +43,13 @@ function cleanApp (app) {
 }
 
 // TODO add an optional parse function
-const doRequest = (url, headers, requestOptions) => new Promise(function (resolve, reject) {
+async function doRequest(url, headers, requestOptions) {
   debug('Making request: %s %j %o', url, headers, requestOptions);
 
-  requestOptions = Object.assign({ method: 'GET' }, requestOptions);
+  const { data } = await axios.get(url, { ...requestOptions, headers });
 
-  request(Object.assign({ url, headers }, requestOptions), (error, response, body) => {
-    if (error) {
-      debug('Request error', error);
-      return reject(error);
-    }
-    if (response.statusCode >= 400) {
-      return reject({ response });
-    }
-    debug('Finished request');
-    resolve(body);
-  });
-});
+  return data
+}
 
 const LOOKUP_URL = 'https://itunes.apple.com/lookup';
 
@@ -70,7 +60,6 @@ function lookup (ids, idField, country, lang, requestOptions) {
   const joinedIds = ids.join(',');
   const url = `${LOOKUP_URL}?${idField}=${joinedIds}&country=${country}&entity=software${langParam}`;
   return doRequest(url, {}, requestOptions)
-    .then(JSON.parse)
     .then((res) => res.results.filter(function (app) {
       return typeof app.wrapperType === 'undefined' || app.wrapperType === 'software';
     }))
