@@ -9,52 +9,44 @@ const BASE_URL =
 // TODO find out if there's a way to filter by device
 // TODO refactor to allow memoization of the first request
 
-function paginate(num = 50, page = 0) {
-  const pageStart = num * (page ? page - 1 : 0);
-  const pageEnd = pageStart + num;
+function paginate<T>(arr: T[], pageSize = 50, page = 0) {
+  const pageStart = pageSize * (page ? page - 1 : 0);
+  const pageEnd = pageStart + pageSize;
 
-  return <T>(arr: T[]) => arr.slice(pageStart, pageEnd);
+  return arr.slice(pageStart, pageEnd);
 }
 
-export function search({ term, country, lang = 'en-us', requestOptions, num, page, idsOnly }: SearchOptions) {
-  return new Promise(function (resolve, reject) {
-    if (!term) {
-      throw Error("term is required");
-    }
+export async function search({
+  term,
+  country,
+  lang = "en-us",
+  requestOptions,
+  num,
+  page,
+  idsOnly,
+}: SearchOptions) {
+  if (!term) {
+    throw Error("term is required");
+  }
 
-    const url = BASE_URL + encodeURIComponent(term);
-    const countryStoreId = storeId(country);
+  const url = BASE_URL + encodeURIComponent(term);
+  const countryStoreId = storeId(country);
 
-    axios.get(
-      url,
-      {
-        headers: {
-          "X-Apple-Store-Front": `${countryStoreId},24 t:native`,
-          "Accept-Language": lang,
-        },
-        params: requestOptions
-      }
-    )
-      .then(({ data }) => data)
-      .then(
-        (response: ITunesSearchResponse) => (response.bubbles[0] && response.bubbles[0].results) || []
-      )
-      .then(paginate(num, page))
-      .then((items) => items.map(({ id }) => id))
-      .then((ids) => {
-        if (idsOnly) {
-          return ids;
-        }
-
-        return lookup(
-          ids,
-          "id",
-          country,
-          lang,
-          requestOptions
-        );
-      })
-      .then(resolve)
-      .catch(reject);
+  const { data }: { data: ITunesSearchResponse } = await axios.get(url, {
+    headers: {
+      "X-Apple-Store-Front": `${countryStoreId},24 t:native`,
+      "Accept-Language": lang,
+    },
+    params: requestOptions,
   });
+
+  const results = data.bubbles[0]?.results || [];
+  const paginated = paginate(results, num, page);
+  const ids = paginated.map(({ id }) => id);
+
+  if (idsOnly) {
+    return ids;
+  }
+
+  return lookup(ids, "id", country, lang, requestOptions);
 }
