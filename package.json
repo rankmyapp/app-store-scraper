@@ -4,11 +4,16 @@
   "description": "scrape data from the itunes app store",
   "main": "index.js",
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc",
     "test": "mocha --timeout 8000"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/facundoolano/app-store-scraper.git"
+  },
+  "engines": {
+    "node": "^14"
   },
   "keywords": [
     "mac",
@@ -24,21 +29,23 @@
   },
   "homepage": "https://github.com/facundoolano/app-store-scraper#readme",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "debug": "^2.2.0",
-    "memoizee": "^0.3.10",
-    "ramda": "^0.21.0",
-    "request": "^2.87.0",
-    "xml2js": "^0.4.16"
+    "axios": "^0.21.1",
+    "cheerio": "1.0.0-rc.10",
+    "debug": "^4.3.1",
+    "memoizee": "^0.4.15",
+    "ramda": "^0.27.1",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^4.18.2",
-    "eslint-config-semistandard": "^6.0.1",
-    "eslint-config-standard": "^5.1.0",
-    "eslint-plugin-promise": "^1.1.0",
-    "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^6.2.2",
-    "validator": "^5.2.0"
+    "@types/node": "^15.12.4",
+    "chai": "^4.3.4",
+    "eslint": "^7.29.0",
+    "eslint-config-semistandard": "^16.0.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-promise": "^5.1.0",
+    "mocha": "^9.0.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.3.4",
+    "validator": "^13.6.0"
   }
 }
