@@ -2,7 +2,8 @@
   "name": "app-store-scraper",
   "version": "0.16.3",
   "description": "scrape data from the itunes app store",
-  "main": "index.js",
+  "main": "dist",
+  "types": "dist",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
