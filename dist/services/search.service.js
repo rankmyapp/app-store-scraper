@@ -1,4 +1,40 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -9,46 +45,47 @@ var common_1 = require("../common");
 var BASE_URL = "https://store-scrapers-api.azure-api.net/va/WebObjects/MZStore.woa/wa/search?clientApplication=Software&media=software&term=";
 // TODO find out if there's a way to filter by device
 // TODO refactor to allow memoization of the first request
-function paginate(num, page) {
-    if (num === void 0) { num = 50; }
+function paginate(arr, pageSize, page) {
+    if (pageSize === void 0) { pageSize = 50; }
     if (page === void 0) { page = 0; }
-    var pageStart = num * (page ? page - 1 : 0);
-    var pageEnd = pageStart + num;
-    return function (arr) { return arr.slice(pageStart, pageEnd); };
+    var pageStart = pageSize * (page ? page - 1 : 0);
+    var pageEnd = pageStart + pageSize;
+    return arr.slice(pageStart, pageEnd);
 }
 function search(_a) {
-    var term = _a.term, country = _a.country, _b = _a.lang, lang = _b === void 0 ? 'en-us' : _b, requestOptions = _a.requestOptions, num = _a.num, page = _a.page, idsOnly = _a.idsOnly;
-    return new Promise(function (resolve, reject) {
-        if (!term) {
-            throw Error("term is required");
-        }
-        var url = BASE_URL + encodeURIComponent(term);
-        var countryStoreId = common_1.storeId(country);
-        axios_1.default.get(url, {
-            headers: {
-                "X-Apple-Store-Front": countryStoreId + ",24 t:native",
-                "Accept-Language": lang,
-            },
-            params: requestOptions
-        })
-            .then(function (_a) {
-            var data = _a.data;
-            return data;
-        })
-            .then(function (response) { return (response.bubbles[0] && response.bubbles[0].results) || []; })
-            .then(paginate(num, page))
-            .then(function (items) { return items.map(function (_a) {
-            var id = _a.id;
-            return id;
-        }); })
-            .then(function (ids) {
-            if (idsOnly) {
-                return ids;
+    var _b;
+    var term = _a.term, country = _a.country, _c = _a.lang, lang = _c === void 0 ? "en-us" : _c, requestOptions = _a.requestOptions, num = _a.num, page = _a.page, idsOnly = _a.idsOnly;
+    return __awaiter(this, void 0, void 0, function () {
+        var url, countryStoreId, data, results, paginated, ids;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    if (!term) {
+                        throw Error("term is required");
+                    }
+                    url = BASE_URL + encodeURIComponent(term);
+                    countryStoreId = common_1.storeId(country);
+                    return [4 /*yield*/, axios_1.default.get(url, {
+                            headers: {
+                                "X-Apple-Store-Front": countryStoreId + ",24 t:native",
+                                "Accept-Language": lang,
+                            },
+                            params: requestOptions,
+                        })];
+                case 1:
+                    data = (_d.sent()).data;
+                    results = ((_b = data.bubbles[0]) === null || _b === void 0 ? void 0 : _b.results) || [];
+                    paginated = paginate(results, num, page);
+                    ids = paginated.map(function (_a) {
+                        var id = _a.id;
+                        return id;
+                    });
+                    if (idsOnly) {
+                        return [2 /*return*/, ids];
+                    }
+                    return [2 /*return*/, common_1.lookup(ids, "id", country, lang, requestOptions)];
             }
-            return common_1.lookup(ids, "id", country, lang, requestOptions);
-        })
-            .then(resolve)
-            .catch(reject);
+        });
     });
 }
 exports.search = search;
