@@ -1,6 +1,6 @@
 {
   "name": "app-store-scraper",
-  "version": "0.16.3",
+  "version": "0.16.4",
   "description": "scrape data from the itunes app store",
   "main": "dist",
   "types": "dist",
