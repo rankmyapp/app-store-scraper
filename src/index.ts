@@ -1,11 +1,8 @@
-import { search } from './services/search.service'
+// Services
+export * from "./services/search.service";
 
-// Export individual methods
-export {
-  search
-}
-
-// Export as unique module
-export default {
-  search
-}
+// Interfaces
+export * from "./interfaces/app.interface";
+export * from "./interfaces/itunes.search.interface";
+export * from "./interfaces/search.options.interface";
+export * from "./interfaces/itunes.lookup.interface";
