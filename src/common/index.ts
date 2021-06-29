@@ -7,7 +7,7 @@ import {
 } from "../interfaces/itunes.lookup.interface";
 import { ITunesApp } from "../interfaces/app.interface";
 
-const LOOKUP_URL = "https://itunes.apple.com/lookup";
+const LOOKUP_URL = "https://store-scrapers-api.azure-api.net/v1/lookup";
 
 export function cleanApp(app: ITunesLookupApp): ITunesApp {
   return {
