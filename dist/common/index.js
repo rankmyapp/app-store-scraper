@@ -53,7 +53,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.storeId = exports.lookup = exports.cleanApp = void 0;
 var axios_1 = __importDefault(require("axios"));
 var constants_1 = require("../constants");
-var LOOKUP_URL = "https://store-scrapers-api.azure-api.net/v1/lookup";
+var LOOKUP_URL = "https://itunes.apple.com/lookup";
 function cleanApp(app) {
     return {
         id: app.trackId,
