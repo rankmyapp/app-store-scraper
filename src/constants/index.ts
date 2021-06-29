@@ -1,4 +1,4 @@
-enum collection {
+export enum Collection {
   TOP_MAC = "topmacapps",
   TOP_FREE_MAC = "topfreemacapps",
   TOP_GROSSING_MAC = "topgrossingmacapps",
@@ -14,7 +14,7 @@ enum collection {
   TOP_PAID_IPAD = "toppaidipadapplications",
 }
 
-enum category {
+export enum Category {
   BOOKS = 6018,
   BUSINESS = 6000,
   CATALOGS = 6022,
@@ -87,19 +87,19 @@ enum category {
   WEATHER = 6001,
 }
 
-enum device {
+export enum Device {
   IPAD = "iPadSoftware",
   MAC = "macSoftware",
   ALL = "software",
 }
 
-enum sort {
+export enum Sort {
   RECENT = "mostRecent",
   HELPFUL = "mostHelpful",
 }
 
 // From https://github.com/gonzoua/random-stuff/blob/master/appstorereviews.rb
-enum markets {
+export enum Markets {
   DZ = 143563,
   AO = 143564,
   AI = 143538,
@@ -215,5 +215,3 @@ enum markets {
   VN = 143471,
   YE = 143571,
 }
-
-export { collection, category, device, sort, markets };

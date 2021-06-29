@@ -1,5 +1,5 @@
 import axios from "axios";
-import { markets } from "../constants";
+import { Markets } from "../constants";
 import {
   Country,
   ITunesLookupApp,
@@ -75,5 +75,5 @@ export function storeId(countryCode: string) {
   const defaultStore = "143441";
   const key = countryCode.toUpperCase() as Country;
 
-  return (countryCode && markets[key]) || defaultStore;
+  return (countryCode && Markets[key]) || defaultStore;
 }

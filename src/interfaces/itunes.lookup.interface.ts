@@ -1,6 +1,6 @@
-import { markets } from "../constants";
+import { Markets } from "../constants";
 
-export type Country = keyof typeof markets;
+export type Country = keyof typeof Markets;
 
 export interface ITunesLookupApp {
   ipadScreenshotUrls: string[];
