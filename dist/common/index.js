@@ -119,7 +119,7 @@ exports.lookup = lookup;
 function storeId(countryCode) {
     var defaultStore = "143441";
     var key = countryCode.toUpperCase();
-    return (countryCode && constants_1.markets[key]) || defaultStore;
+    return (countryCode && constants_1.Markets[key]) || defaultStore;
 }
 exports.storeId = storeId;
 //# sourceMappingURL=index.js.map

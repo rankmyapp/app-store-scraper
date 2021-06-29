@@ -1,4 +1,4 @@
-declare enum collection {
+export declare enum Collection {
     TOP_MAC = "topmacapps",
     TOP_FREE_MAC = "topfreemacapps",
     TOP_GROSSING_MAC = "topgrossingmacapps",
@@ -13,7 +13,7 @@ declare enum collection {
     TOP_PAID_IOS = "toppaidapplications",
     TOP_PAID_IPAD = "toppaidipadapplications"
 }
-declare enum category {
+export declare enum Category {
     BOOKS = 6018,
     BUSINESS = 6000,
     CATALOGS = 6022,
@@ -85,16 +85,16 @@ declare enum category {
     UTILITIES = 6002,
     WEATHER = 6001
 }
-declare enum device {
+export declare enum Device {
     IPAD = "iPadSoftware",
     MAC = "macSoftware",
     ALL = "software"
 }
-declare enum sort {
+export declare enum Sort {
     RECENT = "mostRecent",
     HELPFUL = "mostHelpful"
 }
-declare enum markets {
+export declare enum Markets {
     DZ = 143563,
     AO = 143564,
     AI = 143538,
@@ -210,5 +210,4 @@ declare enum markets {
     VN = 143471,
     YE = 143571
 }
-export { collection, category, device, sort, markets };
 //# sourceMappingURL=index.d.ts.map
