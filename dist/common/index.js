@@ -50,7 +50,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.storeId = exports.lookup = exports.cleanApp = void 0;
+exports.getStoreId = exports.lookup = exports.cleanApp = void 0;
 var axios_1 = __importDefault(require("axios"));
 var constants_1 = require("../constants");
 var LOOKUP_URL = "https://itunes.apple.com/lookup";
@@ -116,10 +116,10 @@ function lookup(ids, idField, country, lang, requestOptions) {
     });
 }
 exports.lookup = lookup;
-function storeId(countryCode) {
+function getStoreId(countryCode) {
     var defaultStore = "143441";
     var key = countryCode.toUpperCase();
     return (countryCode && constants_1.Markets[key]) || defaultStore;
 }
-exports.storeId = storeId;
+exports.getStoreId = getStoreId;
 //# sourceMappingURL=index.js.map

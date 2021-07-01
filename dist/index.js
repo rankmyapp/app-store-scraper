@@ -12,11 +12,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Services
 __exportStar(require("./services/search.service"), exports);
+__exportStar(require("./services/list.service"), exports);
 // Interfaces
 __exportStar(require("./interfaces/app.interface"), exports);
-__exportStar(require("./interfaces/itunes.search.interface"), exports);
 __exportStar(require("./interfaces/search.options.interface"), exports);
-__exportStar(require("./interfaces/itunes.lookup.interface"), exports);
 // Constants
 __exportStar(require("./constants"), exports);
 //# sourceMappingURL=index.js.map

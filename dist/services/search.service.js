@@ -64,7 +64,7 @@ function search(_a) {
                         throw Error("term is required");
                     }
                     url = BASE_URL + encodeURIComponent(term);
-                    countryStoreId = common_1.storeId(country);
+                    countryStoreId = common_1.getStoreId(country);
                     return [4 /*yield*/, axios_1.default.get(url, {
                             headers: {
                                 "X-Apple-Store-Front": countryStoreId + ",24 t:native",
