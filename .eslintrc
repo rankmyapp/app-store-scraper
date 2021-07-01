@@ -13,6 +13,7 @@
     "no-var": "error",
     "prefer-const": "error",
     "no-else-return": "error",
-    "object-shorthand": ["error", "properties"]
+    "object-shorthand": ["error", "properties"],
+    "no-console": "warn"
   }
 }
