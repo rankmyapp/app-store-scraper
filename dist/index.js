@@ -16,6 +16,8 @@ __exportStar(require("./services/list.service"), exports);
 // Interfaces
 __exportStar(require("./interfaces/app.interface"), exports);
 __exportStar(require("./interfaces/search.options.interface"), exports);
+__exportStar(require("./interfaces/category.interface"), exports);
+__exportStar(require("./interfaces/category.options.interface"), exports);
 // Constants
 __exportStar(require("./constants"), exports);
 //# sourceMappingURL=index.js.map
