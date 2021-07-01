@@ -4,8 +4,8 @@ import axios from "axios";
 import { lookup, getStoreId } from "../common";
 import { Category, Collection } from "../constants";
 import { CategoryOptions } from "../interfaces/category.options.interface";
+import { ITunesCategoryItem } from "../interfaces/category.interface";
 import {
-  ITunesCategoryInternalEntry,
   ITunesCategoryResponse,
   ITunesCategoryResponseEntry,
 } from "../interfaces/itunes.category.interface";
@@ -13,7 +13,9 @@ import {
 function parseLink(app: ITunesCategoryResponseEntry) {
   if (app.link) {
     const linkArray = Array.isArray(app.link) ? app.link : [app.link];
-    const link = linkArray.find((linkEntry) => linkEntry.attributes.rel === "alternate");
+    const link = linkArray.find(
+      (linkEntry) => linkEntry.attributes.rel === "alternate"
+    );
 
     return link && link.attributes.href;
   }
@@ -21,9 +23,7 @@ function parseLink(app: ITunesCategoryResponseEntry) {
   return undefined;
 }
 
-function cleanApp(
-  app: ITunesCategoryResponseEntry
-): ITunesCategoryInternalEntry {
+function cleanApp(app: ITunesCategoryResponseEntry): ITunesCategoryItem {
   let developerUrl, developerId;
 
   if (app["im:artist"].attributes) {
@@ -77,7 +77,6 @@ function validate({ category, collection, num }: CategoryOptions) {
   if (!category || !(category in Category)) {
     throw Error("Invalid category " + category);
   }
-
 
   if (!collection || !Object.values(Collection).includes(collection)) {
     throw Error(`Invalid collection ${collection}`);
