@@ -5,6 +5,8 @@ export * from "./services/list.service";
 // Interfaces
 export * from "./interfaces/app.interface";
 export * from "./interfaces/search.options.interface";
+export * from "./interfaces/category.interface"
+export * from "./interfaces/category.options.interface";
 export { Country } from "./interfaces/itunes.lookup.interface"
 
 // Constants
