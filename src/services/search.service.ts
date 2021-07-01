@@ -1,5 +1,5 @@
 import axios from "axios";
-import { lookup, storeId } from "../common";
+import { lookup, getStoreId } from "../common";
 import { ITunesSearchResponse } from "../interfaces/itunes.search.interface";
 import { SearchOptions } from "../interfaces/search.options.interface";
 
@@ -30,7 +30,7 @@ export async function search({
   }
 
   const url = BASE_URL + encodeURIComponent(term);
-  const countryStoreId = storeId(country);
+  const countryStoreId = getStoreId(country);
 
   const { data }: { data: ITunesSearchResponse } = await axios.get(url, {
     headers: {

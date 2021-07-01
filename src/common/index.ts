@@ -71,7 +71,7 @@ export async function lookup(
   return filtered.map(cleanApp);
 }
 
-export function storeId(countryCode: string) {
+export function getStoreId(countryCode: string) {
   const defaultStore = "143441";
   const key = countryCode.toUpperCase() as Country;
 
