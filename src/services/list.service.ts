@@ -102,8 +102,11 @@ export async function list(options: CategoryOptions) {
 
   validate({ category, collection, num });
 
-  const categoryParam = category ? `/genre=${category}` : "";
+  // Return only the category code
+  const genre = typeof category === "number" ? category : Category[category];
+  const categoryParam = category ? `/genre=${genre}` : "";
   const storeId = getStoreId(country);
+
   const url = `http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/${collection}${categoryParam}/limit=${num}/json?s=${storeId}`;
 
   const { data }: { data: ITunesCategoryResponse } = await axios.get(url, {
