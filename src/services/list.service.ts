@@ -59,14 +59,14 @@ function cleanApp(app: ITunesCategoryResponseEntry): ITunesCategoryItem {
 }
 
 function processResults(
-  results: ITunesCategoryResponse,
+  { feed: { entry } }: ITunesCategoryResponse,
   { country, fullDetail, lang, requestOptions }: CategoryOptions
 ) {
-  const apps = results.feed.entry;
-
-  if (!apps) {
+  if (!entry) {
     return [];
   }
+
+  const apps = Array.isArray(entry) ? entry : [entry];
 
   if (fullDetail) {
     const ids = apps.map((app) => app.id.attributes["im:id"]);
