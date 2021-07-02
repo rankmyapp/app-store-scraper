@@ -82,12 +82,13 @@ function cleanApp(app) {
         released: app["im:releaseDate"].label,
     };
 }
-function processResults(results, _a) {
-    var country = _a.country, fullDetail = _a.fullDetail, lang = _a.lang, requestOptions = _a.requestOptions;
-    var apps = results.feed.entry;
-    if (!apps) {
+function processResults(_a, _b) {
+    var entry = _a.feed.entry;
+    var country = _b.country, fullDetail = _b.fullDetail, lang = _b.lang, requestOptions = _b.requestOptions;
+    if (!entry) {
         return [];
     }
+    var apps = Array.isArray(entry) ? entry : [entry];
     if (fullDetail) {
         var ids = apps.map(function (app) { return app.id.attributes["im:id"]; });
         return common_1.lookup(ids, "id", country, lang, requestOptions);
