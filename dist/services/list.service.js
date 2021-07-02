@@ -85,6 +85,9 @@ function cleanApp(app) {
 function processResults(results, _a) {
     var country = _a.country, fullDetail = _a.fullDetail, lang = _a.lang, requestOptions = _a.requestOptions;
     var apps = results.feed.entry;
+    if (!apps) {
+        return [];
+    }
     if (fullDetail) {
         var ids = apps.map(function (app) { return app.id.attributes["im:id"]; });
         return common_1.lookup(ids, "id", country, lang, requestOptions);
@@ -105,13 +108,14 @@ function validate(_a) {
 }
 function list(options) {
     return __awaiter(this, void 0, void 0, function () {
-        var category, _a, country, _b, collection, _c, num, requestOptions, categoryParam, storeId, url, data;
+        var category, _a, country, _b, collection, _c, num, requestOptions, genre, categoryParam, storeId, url, data;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
                     category = options.category, _a = options.country, country = _a === void 0 ? "BR" : _a, _b = options.collection, collection = _b === void 0 ? constants_1.Collection.TOP_FREE_IOS : _b, _c = options.num, num = _c === void 0 ? 50 : _c, requestOptions = options.requestOptions;
                     validate({ category: category, collection: collection, num: num });
-                    categoryParam = category ? "/genre=" + category : "";
+                    genre = typeof category === "number" ? category : constants_1.Category[category];
+                    categoryParam = category ? "/genre=" + genre : "";
                     storeId = common_1.getStoreId(country);
                     url = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/" + collection + categoryParam + "/limit=" + num + "/json?s=" + storeId;
                     return [4 /*yield*/, axios_1.default.get(url, {
