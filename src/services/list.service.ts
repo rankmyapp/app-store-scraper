@@ -64,6 +64,10 @@ function processResults(
 ) {
   const apps = results.feed.entry;
 
+  if (!apps) {
+    return [];
+  }
+
   if (fullDetail) {
     const ids = apps.map((app) => app.id.attributes["im:id"]);
 
