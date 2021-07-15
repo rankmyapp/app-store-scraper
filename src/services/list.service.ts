@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { lookup, getStoreId } from "../common";
-import { Category, Collection } from "../constants";
+import { Category, Collection, Markets } from "../constants";
 import { CategoryOptions } from "../interfaces/category.options.interface";
 import { ITunesCategoryItem } from "../interfaces/category.interface";
 import {
@@ -39,6 +39,7 @@ function cleanApp(app: ITunesCategoryResponseEntry): ITunesCategoryItem {
   }
 
   const price = parseFloat(app["im:price"].attributes.amount);
+
   return {
     id: app.id.attributes["im:id"],
     appId: app.id.attributes["im:bundleId"],
@@ -77,13 +78,21 @@ function processResults(
   return apps.map(cleanApp);
 }
 
-function validate({ category, collection, num }: CategoryOptions) {
+function validate({ category, collection, country, num }: CategoryOptions) {
   if (!category || !(category in Category)) {
-    throw Error("Invalid category " + category);
+    throw Error(`Invalid category: ${category}`);
   }
 
   if (!collection || !Object.values(Collection).includes(collection)) {
-    throw Error(`Invalid collection ${collection}`);
+    throw Error(`Invalid collection: ${collection}`);
+  }
+
+  if (!country || !(country in Markets)) {
+    throw Error(`Invalid country: ${country}`);
+  }
+
+  if (Number.isNaN(Number(num))) {
+    throw Error(`'num' must be a number. Received: ${num}`)
   }
 
   if (!num || num > 200) {
@@ -100,7 +109,7 @@ export async function list(options: CategoryOptions) {
     requestOptions,
   } = options;
 
-  validate({ category, collection, num });
+  validate({ category, collection, country, num });
 
   // Return only the category code
   const genre = typeof category === "number" ? category : Category[category];
