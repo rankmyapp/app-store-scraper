@@ -96,12 +96,18 @@ function processResults(_a, _b) {
     return apps.map(cleanApp);
 }
 function validate(_a) {
-    var category = _a.category, collection = _a.collection, num = _a.num;
+    var category = _a.category, collection = _a.collection, country = _a.country, num = _a.num;
     if (!category || !(category in constants_1.Category)) {
-        throw Error("Invalid category " + category);
+        throw Error("Invalid category: " + category);
     }
     if (!collection || !Object.values(constants_1.Collection).includes(collection)) {
-        throw Error("Invalid collection " + collection);
+        throw Error("Invalid collection: " + collection);
+    }
+    if (!country || !(country in constants_1.Markets)) {
+        throw Error("Invalid country: " + country);
+    }
+    if (Number.isNaN(Number(num))) {
+        throw Error("'num' must be a number. Received: " + num);
     }
     if (!num || num > 200) {
         throw Error("Cannot retrieve more than 200 apps");
@@ -114,7 +120,7 @@ function list(options) {
             switch (_d.label) {
                 case 0:
                     category = options.category, _a = options.country, country = _a === void 0 ? "BR" : _a, _b = options.collection, collection = _b === void 0 ? constants_1.Collection.TOP_FREE_IOS : _b, _c = options.num, num = _c === void 0 ? 50 : _c, requestOptions = options.requestOptions;
-                    validate({ category: category, collection: collection, num: num });
+                    validate({ category: category, collection: collection, country: country, num: num });
                     genre = typeof category === "number" ? category : constants_1.Category[category];
                     categoryParam = category ? "/genre=" + genre : "";
                     storeId = common_1.getStoreId(country);
